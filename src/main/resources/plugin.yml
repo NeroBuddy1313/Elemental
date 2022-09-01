@@ -1,0 +1,14 @@
+name: Elemental
+version: '${project.version}'
+main: de.nerobuddy.elemental.Elemental
+api-version: 1.18
+commands:
+  fly:
+    aliases:
+      - flymode
+  gamemode:
+    aliases:
+      - gm
+  feed:
+  heal:
+  sethealth:
