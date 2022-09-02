@@ -35,7 +35,7 @@ public class HealCommand extends PlayerCommandHandler {
     }
 
     @Override
-    public void executePlayerCommand(Player p, String[] args) throws NoPermissionException, InvalidUsageException, PlayerNotFoundException {
+    public void executePlayerCommand(final Player p, final String[] args) throws NoPermissionException, InvalidUsageException, PlayerNotFoundException {
         if (!(p.hasPermission("elemental.heal") || p.hasPermission("elemental.heal.others"))) {
             throw new NoPermissionException();
         }
@@ -50,12 +50,12 @@ public class HealCommand extends PlayerCommandHandler {
         } else if (args.length == 1) {
             if (p.hasPermission("elemental.heal.others")) {
                 Player t = Bukkit.getPlayer(args[0]);
-                if(t != null) {
+                if (t != null) {
                     t.setFoodLevel(20);
                     t.setHealth(t.getMaxHealth());
                     msgPlayer(t, color(prefix + "&eYou have been healed!"));
                     msgPlayer(p, color(prefix + "&c" + t.getName() + " &ehas been healed!"));
-                }else{
+                } else {
                     throw new PlayerNotFoundException(args[0]);
                 }
             } else {

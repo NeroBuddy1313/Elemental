@@ -3,7 +3,9 @@ package de.nerobuddy.elemental.commands;
 import de.nerobuddy.elemental.Elemental;
 import de.nerobuddy.elemental.exceptions.InvalidUsageException;
 import de.nerobuddy.elemental.exceptions.NoPermissionException;
+import de.nerobuddy.elemental.exceptions.PlayerNotFoundException;
 import de.nerobuddy.elemental.utils.PlayerCommandHandler;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -34,25 +36,46 @@ public class GameModeCommand extends PlayerCommandHandler {
     }
 
     @Override
-    public void executePlayerCommand(final Player p, final String[] args) throws NoPermissionException, InvalidUsageException {
-        if (!p.hasPermission("elemental.gm")) {
+    public void executePlayerCommand(final Player p, final String[] args) throws NoPermissionException, InvalidUsageException, PlayerNotFoundException {
+        if (!p.hasPermission("elemental.gamemode") || !p.hasPermission("elemental.gamemode.others")) {
             throw new NoPermissionException();
         }
-        if (args.length != 1) {
+        if (args.length == 1) {
+            if (p.hasPermission("elemental.gamemode")) {
+                changeGameMode(p, args);
+            } else {
+                throw new NoPermissionException();
+            }
+        } else if (args.length == 2) {
+            if (p.hasPermission("elemental.gamemode.others")) {
+                Player target = Bukkit.getPlayer(args[1]);
+                if (target != null) {
+                    changeGameMode(target, args);
+                } else {
+                    throw new PlayerNotFoundException(args[1]);
+                }
+            } else {
+                throw new NoPermissionException();
+            }
+        } else {
             throw new InvalidUsageException();
         }
+    }
+
+    public void changeGameMode(final Player p, final String[] args) {
         if (args[0].equalsIgnoreCase("0") || args[0].equalsIgnoreCase("survival")) {
             p.setGameMode(GameMode.SURVIVAL);
-            msgPlayer(p, color(prefix + "&aSpielmodus gewechselt zu:&b Survival"));
+            msgPlayer(p, color(prefix + "&eGamemode changed to:&b Survival"));
         } else if (args[0].equalsIgnoreCase("1") || args[0].equalsIgnoreCase("creative")) {
             p.setGameMode(GameMode.CREATIVE);
-            msgPlayer(p, color(prefix + "&aSpielmodus gewechselt zu:&b Creative"));
+            msgPlayer(p, color(prefix + "&eGamemode changed to:&b Creative"));
         } else if (args[0].equalsIgnoreCase("2") || args[0].equalsIgnoreCase("adventure")) {
             p.setGameMode(GameMode.ADVENTURE);
-            msgPlayer(p, color(prefix + "&aSpielmodus gewechselt zu:&b Adventure"));
+            msgPlayer(p, color(prefix + "&eGamemode changed to:&b Adventure"));
         } else if (args[0].equalsIgnoreCase("3") || args[0].equalsIgnoreCase("spectator")) {
             p.setGameMode(GameMode.SPECTATOR);
-            msgPlayer(p, color(prefix + "&aSpielmodus gewechselt zu:&b Spectator"));
+            msgPlayer(p, color(prefix + "&eGamemode changed to:&b Spectator"));
         }
     }
+
 }

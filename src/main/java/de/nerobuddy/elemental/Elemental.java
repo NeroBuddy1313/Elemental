@@ -1,6 +1,8 @@
 package de.nerobuddy.elemental;
 
 import de.nerobuddy.elemental.commands.*;
+import de.nerobuddy.elemental.listeners.PlayerJoinListener;
+import de.nerobuddy.elemental.listeners.PlayerQuitListener;
 import de.nerobuddy.elemental.utils.CommandPool;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -47,10 +49,13 @@ public final class Elemental extends JavaPlugin {
         commandPool.addCommand(new FeedCommand());
         commandPool.addCommand(new HealCommand());
         commandPool.addCommand(new SetHealthCommand());
+        commandPool.addCommand(new GodModeCommand());
     }
 
     public void registerListeners() {
         PluginManager pM = Bukkit.getPluginManager();
+        pM.registerEvents(new PlayerJoinListener(), this);
+        pM.registerEvents(new PlayerQuitListener(), this);
     }
 
     public static Elemental getPlugin() {

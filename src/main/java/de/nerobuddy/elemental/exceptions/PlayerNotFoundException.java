@@ -9,7 +9,8 @@ package de.nerobuddy.elemental.exceptions;
 public class PlayerNotFoundException extends Exception {
 
     private final String playerName;
-    public PlayerNotFoundException(String arg) {
+
+    public PlayerNotFoundException(final String arg) {
         this.playerName = arg;
     }
 

@@ -35,7 +35,7 @@ public class SetHealthCommand extends PlayerCommandHandler {
     }
 
     @Override
-    public void executePlayerCommand(Player p, String[] args) throws NoPermissionException, InvalidUsageException, PlayerNotFoundException {
+    public void executePlayerCommand(final Player p, final String[] args) throws NoPermissionException, InvalidUsageException, PlayerNotFoundException {
         if (!(p.hasPermission("elemental.sethealth") || p.hasPermission("elemental.sethealth.others"))) {
             throw new NoPermissionException();
         }
@@ -60,7 +60,7 @@ public class SetHealthCommand extends PlayerCommandHandler {
                     msgPlayer(t, color(prefix + "&eYour healtscale has been set to &c" + healthScale + "&e!"));
                     msgPlayer(p, color(prefix + "&eThe healtscale of &c" + t.getName() + " &ehas been set to &c" + healthScale + "&e!"));
                 } else {
-                    throw new PlayerNotFoundException(args[0]);
+                    throw new PlayerNotFoundException(args[1]);
                 }
             } else {
                 throw new NoPermissionException();

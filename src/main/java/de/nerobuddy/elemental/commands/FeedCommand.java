@@ -35,7 +35,7 @@ public class FeedCommand extends PlayerCommandHandler {
     }
 
     @Override
-    public void executePlayerCommand(Player p, String[] args) throws NoPermissionException, InvalidUsageException, PlayerNotFoundException {
+    public void executePlayerCommand(final Player p, final String[] args) throws NoPermissionException, InvalidUsageException, PlayerNotFoundException {
         if (!(p.hasPermission("elemental.feed") || p.hasPermission("elemental.feed.others"))) {
             throw new NoPermissionException();
         }
@@ -49,11 +49,11 @@ public class FeedCommand extends PlayerCommandHandler {
         } else if (args.length == 1) {
             if (p.hasPermission("elemental.feed.others")) {
                 Player t = Bukkit.getPlayer(args[0]);
-                if(t != null) {
+                if (t != null) {
                     t.setFoodLevel(20);
                     msgPlayer(t, color(prefix + "&eYou have been feed!"));
                     msgPlayer(p, color(prefix + "&c" + t.getName() + " &ehas been feed!"));
-                }else{
+                } else {
                     throw new PlayerNotFoundException(args[0]);
                 }
             } else {

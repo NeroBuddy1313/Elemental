@@ -9,63 +9,72 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import static de.nerobuddy.elemental.utils.Utils.color;
 
 /**
  * @author m_wei
  * @project Elemental
- * @created 01.09.2022 - 23:02
+ * @created 02.09.2022 - 20:56
  */
 
-public class FlyCommand extends PlayerCommandHandler {
+public class GodModeCommand extends PlayerCommandHandler {
 
     private final Elemental plugin = Elemental.getPlugin();
     private final FileConfiguration config = plugin.getConfig();
     private final String prefix = config.getString("prefix");
 
+    private final List<UUID> godModeList = new ArrayList<>();
+
     @Override
     public String getName() {
-        return "fly";
+        return "godmode";
     }
 
     @Override
     public String getUsage() {
-        return "/fly <player>";
+        return "/godmode <player>";
     }
 
     @Override
     public void executePlayerCommand(final Player p, final String[] args) throws NoPermissionException, InvalidUsageException, PlayerNotFoundException {
-        if (!(p.hasPermission("elemental.fly") || p.hasPermission("elemental.fly.others"))) {
+        if (!(p.hasPermission("elemental.godmode") || p.hasPermission("elemental.godmode.others"))) {
             throw new NoPermissionException();
         }
+        UUID uuid;
         if (args.length == 0) {
-            if (p.hasPermission("elemental.fly")) {
-                if (p.getAllowFlight()) {
-                    p.setAllowFlight(false);
-                    p.setFlying(false);
-                    p.sendMessage(color(prefix + "&eYou can't fly anymore!"));
+            uuid = p.getUniqueId();
+            if (p.hasPermission("elemental.godmode")) {
+                if (godModeList.contains(uuid)) {
+                    p.setInvulnerable(false);
+                    godModeList.remove(uuid);
+                    p.sendMessage(color(prefix + "&eYou are no longer invulnerable!"));
                 } else {
-                    p.setAllowFlight(true);
-                    p.setFlying(true);
-                    p.sendMessage(color(prefix + "&eYou can fly now!"));
+                    p.setInvulnerable(true);
+                    godModeList.add(uuid);
+                    p.sendMessage(color(prefix + "&eYou are now invulnerable!"));
                 }
             } else {
                 throw new NoPermissionException();
             }
         } else if (args.length == 1) {
-            if (p.hasPermission("elemental.fly.others")) {
+            if (p.hasPermission("elemental.godmode.others")) {
                 Player t = Bukkit.getPlayer(args[0]);
                 if (t != null) {
-                    if (t.getAllowFlight()) {
-                        t.setAllowFlight(false);
-                        t.setFlying(false);
-                        t.sendMessage(color(prefix + "&eYou can't fly anymore!"));
-                        p.sendMessage(color(prefix + "&c" + t.getDisplayName() + " &ecan't fly anymore!"));
+                    uuid = t.getUniqueId();
+                    if (godModeList.contains(uuid)) {
+                        t.setInvulnerable(false);
+                        godModeList.remove(uuid);
+                        t.sendMessage(color(prefix + "&eYou are no longer invulnerable!"));
+                        p.sendMessage(color(prefix + "&c" + t.getName() + " &eis no longer invulnerable!"));
                     } else {
-                        t.setAllowFlight(true);
-                        t.setFlying(true);
-                        t.sendMessage(color(prefix + "§eYou can fly now!"));
-                        p.sendMessage(color(prefix + "&c" + t.getDisplayName() + " &ecan fly now!"));
+                        t.setInvulnerable(true);
+                        godModeList.add(uuid);
+                        t.sendMessage(color(prefix + "&eYou are now invulnerable!"));
+                        p.sendMessage(color(prefix + "&c" + t.getName() + " &eis now invulnerable!"));
                     }
                 } else {
                     throw new PlayerNotFoundException(args[0]);
@@ -77,4 +86,5 @@ public class FlyCommand extends PlayerCommandHandler {
             throw new InvalidUsageException();
         }
     }
+
 }

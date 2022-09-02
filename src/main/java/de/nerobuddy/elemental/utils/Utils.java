@@ -9,7 +9,10 @@ import org.bukkit.entity.Player;
  * @created 01.09.2022 - 22:55
  */
 
-public class Utils {
+public final class Utils {
+
+    private Utils() {
+    }
 
     public static String color(final String s) {
         return ChatColor.translateAlternateColorCodes('&', s);

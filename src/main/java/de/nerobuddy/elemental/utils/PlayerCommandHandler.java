@@ -26,7 +26,7 @@ public abstract class PlayerCommandHandler implements IBaseCommand {
 
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(@NotNull final CommandSender sender, @NotNull final Command command, @NotNull final String label, @NotNull final String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage(color(prefix + "&cThis command could only be executed by players!"));
         } else {
@@ -36,7 +36,7 @@ public abstract class PlayerCommandHandler implements IBaseCommand {
                 sender.sendMessage(color(prefix + "&cYou do not have permission to use this command!"));
             } catch (InvalidUsageException e) {
                 sender.sendMessage(color(prefix + "&eUsage " + getUsage()));
-            } catch (PlayerNotFoundException e){
+            } catch (PlayerNotFoundException e) {
                 sender.sendMessage(color(prefix + "&eThe player &c" + e.getPlayerName() + " &ecould not be found!"));
             }
         }
