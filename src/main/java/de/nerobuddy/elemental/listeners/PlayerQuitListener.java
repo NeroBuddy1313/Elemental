@@ -2,12 +2,15 @@ package de.nerobuddy.elemental.listeners;
 
 import de.nerobuddy.elemental.Elemental;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.Objects;
+import java.util.UUID;
 
+import static de.nerobuddy.elemental.utils.AFKManager.playerLeft;
 import static de.nerobuddy.elemental.utils.Utils.color;
 
 /**
@@ -24,7 +27,14 @@ public class PlayerQuitListener implements Listener {
 
     @EventHandler
     public void onPlayerQuit(final PlayerQuitEvent e) {
-        e.setQuitMessage(color(prefix + Objects.requireNonNull(config.getString("quitMessage")).replace("%player%", e.getPlayer().getName())));
+        Player p = e.getPlayer();
+        UUID uuid = p.getUniqueId();
+
+        // AFK player left
+        playerLeft(uuid);
+
+        // set quit message
+        e.setQuitMessage(color(prefix + Objects.requireNonNull(config.getString("quitMessage")).replace("%player%", e.getPlayer().getDisplayName())));
     }
 
 }

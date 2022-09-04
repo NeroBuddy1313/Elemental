@@ -2,12 +2,15 @@ package de.nerobuddy.elemental;
 
 import de.nerobuddy.elemental.commands.*;
 import de.nerobuddy.elemental.listeners.PlayerJoinListener;
+import de.nerobuddy.elemental.listeners.PlayerMoveListener;
 import de.nerobuddy.elemental.listeners.PlayerQuitListener;
 import de.nerobuddy.elemental.utils.CommandPool;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import static de.nerobuddy.elemental.utils.Utils.setConfigDefaults;
 
 public final class Elemental extends JavaPlugin {
 
@@ -22,9 +25,7 @@ public final class Elemental extends JavaPlugin {
 
         // Config
         FileConfiguration config = plugin.getConfig();
-        config.addDefault("prefix", "&8[&eElemental&8] ");
-        config.addDefault("joinMessage", "&c%player% &ehas joined the server");
-        config.addDefault("quitMessage", "&c%player% &ehas left the server");
+        setConfigDefaults();
 
         // Config defaults
         config.options().copyDefaults(true);
@@ -50,12 +51,18 @@ public final class Elemental extends JavaPlugin {
         commandPool.addCommand(new HealCommand());
         commandPool.addCommand(new SetHealthCommand());
         commandPool.addCommand(new GodModeCommand());
+        commandPool.addCommand(new UuidCommand());
+        commandPool.addCommand(new NickCommand());
+        commandPool.addCommand(new ResetNickCommand());
+        commandPool.addCommand(new IsAFKCommand());
+        commandPool.addCommand(new AFKCommand());
     }
 
     public void registerListeners() {
         PluginManager pM = Bukkit.getPluginManager();
         pM.registerEvents(new PlayerJoinListener(), this);
         pM.registerEvents(new PlayerQuitListener(), this);
+        pM.registerEvents(new PlayerMoveListener(), this);
     }
 
     public static Elemental getPlugin() {

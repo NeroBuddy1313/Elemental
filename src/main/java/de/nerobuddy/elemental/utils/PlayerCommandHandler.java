@@ -45,6 +45,6 @@ public abstract class PlayerCommandHandler implements IBaseCommand {
 
     public abstract String getUsage();
 
-    public abstract void executePlayerCommand(Player sender, String[] args) throws NoPermissionException, InvalidUsageException, PlayerNotFoundException;
+    public abstract void executePlayerCommand(Player p, String[] args) throws NoPermissionException, InvalidUsageException, PlayerNotFoundException;
 
 }

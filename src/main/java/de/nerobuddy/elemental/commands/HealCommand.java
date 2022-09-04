@@ -54,7 +54,7 @@ public class HealCommand extends PlayerCommandHandler {
                     t.setFoodLevel(20);
                     t.setHealth(t.getMaxHealth());
                     msgPlayer(t, color(prefix + "&eYou have been healed!"));
-                    msgPlayer(p, color(prefix + "&c" + t.getName() + " &ehas been healed!"));
+                    msgPlayer(p, color(prefix + "&c" + t.getDisplayName() + " &ehas been healed!"));
                 } else {
                     throw new PlayerNotFoundException(args[0]);
                 }

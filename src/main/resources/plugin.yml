@@ -9,3 +9,8 @@ commands:
   heal:
   sethealth:
   godmode:
+  uuid:
+  nick:
+  resetnick:
+  afk:
+  isafk:

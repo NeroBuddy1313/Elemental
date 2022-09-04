@@ -69,12 +69,12 @@ public class GodModeCommand extends PlayerCommandHandler {
                         t.setInvulnerable(false);
                         godModeList.remove(uuid);
                         t.sendMessage(color(prefix + "&eYou are no longer invulnerable!"));
-                        p.sendMessage(color(prefix + "&c" + t.getName() + " &eis no longer invulnerable!"));
+                        p.sendMessage(color(prefix + "&c" + t.getDisplayName() + " &eis no longer invulnerable!"));
                     } else {
                         t.setInvulnerable(true);
                         godModeList.add(uuid);
                         t.sendMessage(color(prefix + "&eYou are now invulnerable!"));
-                        p.sendMessage(color(prefix + "&c" + t.getName() + " &eis now invulnerable!"));
+                        p.sendMessage(color(prefix + "&c" + t.getDisplayName() + " &eis now invulnerable!"));
                     }
                 } else {
                     throw new PlayerNotFoundException(args[0]);

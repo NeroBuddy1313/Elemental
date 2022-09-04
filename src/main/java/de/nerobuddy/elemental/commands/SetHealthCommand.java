@@ -58,7 +58,7 @@ public class SetHealthCommand extends PlayerCommandHandler {
                 if (t != null) {
                     t.setHealthScale(healthScale);
                     msgPlayer(t, color(prefix + "&eYour healtscale has been set to &c" + healthScale + "&e!"));
-                    msgPlayer(p, color(prefix + "&eThe healtscale of &c" + t.getName() + " &ehas been set to &c" + healthScale + "&e!"));
+                    msgPlayer(p, color(prefix + "&eThe healtscale of &c" + t.getDisplayName() + " &ehas been set to &c" + healthScale + "&e!"));
                 } else {
                     throw new PlayerNotFoundException(args[1]);
                 }

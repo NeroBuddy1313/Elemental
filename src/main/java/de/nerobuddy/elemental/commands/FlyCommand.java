@@ -9,6 +9,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import java.util.Objects;
+
 import static de.nerobuddy.elemental.utils.Utils.color;
 
 /**
@@ -35,37 +37,37 @@ public class FlyCommand extends PlayerCommandHandler {
 
     @Override
     public void executePlayerCommand(final Player p, final String[] args) throws NoPermissionException, InvalidUsageException, PlayerNotFoundException {
-        if (!(p.hasPermission("elemental.fly") || p.hasPermission("elemental.fly.others"))) {
+        if (!(p.hasPermission(Objects.requireNonNull(config.getString("fly.permission.self"))) || p.hasPermission(Objects.requireNonNull(config.getString("fly.permission.others"))))) {
             throw new NoPermissionException();
         }
         if (args.length == 0) {
-            if (p.hasPermission("elemental.fly")) {
+            if (p.hasPermission(Objects.requireNonNull(config.getString("fly.permission.self")))) {
                 if (p.getAllowFlight()) {
                     p.setAllowFlight(false);
                     p.setFlying(false);
-                    p.sendMessage(color(prefix + "&eYou can't fly anymore!"));
+                    p.sendMessage(color(prefix + config.getString("fly.message.self.nofly")));
                 } else {
                     p.setAllowFlight(true);
                     p.setFlying(true);
-                    p.sendMessage(color(prefix + "&eYou can fly now!"));
+                    p.sendMessage(color(prefix + config.getString("fly.message.self.fly")));
                 }
             } else {
                 throw new NoPermissionException();
             }
         } else if (args.length == 1) {
-            if (p.hasPermission("elemental.fly.others")) {
+            if (p.hasPermission(Objects.requireNonNull(config.getString("fly.permission.others")))) {
                 Player t = Bukkit.getPlayer(args[0]);
                 if (t != null) {
                     if (t.getAllowFlight()) {
                         t.setAllowFlight(false);
                         t.setFlying(false);
-                        t.sendMessage(color(prefix + "&eYou can't fly anymore!"));
-                        p.sendMessage(color(prefix + "&c" + t.getDisplayName() + " &ecan't fly anymore!"));
+                        t.sendMessage(color(prefix + config.getString("fly.message.self.nofly")));
+                        p.sendMessage(color(prefix + Objects.requireNonNull(config.getString("fly.message.others.nofly")).replace("%player%", t.getDisplayName())));
                     } else {
                         t.setAllowFlight(true);
                         t.setFlying(true);
-                        t.sendMessage(color(prefix + "§eYou can fly now!"));
-                        p.sendMessage(color(prefix + "&c" + t.getDisplayName() + " &ecan fly now!"));
+                        t.sendMessage(color(prefix + config.getString("fly.message.self.fly")));
+                        p.sendMessage(color(prefix + Objects.requireNonNull(config.getString("fly.message.others.fly")).replace("%player%", t.getDisplayName())));
                     }
                 } else {
                     throw new PlayerNotFoundException(args[0]);

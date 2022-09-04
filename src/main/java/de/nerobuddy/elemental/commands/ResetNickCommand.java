@@ -9,18 +9,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import java.util.Objects;
-
+import static de.nerobuddy.elemental.utils.NickManager.removePlayerNick;
 import static de.nerobuddy.elemental.utils.Utils.color;
 import static de.nerobuddy.elemental.utils.Utils.msgPlayer;
 
 /**
  * @author m_wei
  * @project Elemental
- * @created 01.09.2022 - 23:20
+ * @created 04.09.2022 - 21:00
  */
 
-public class FeedCommand extends PlayerCommandHandler {
+public class ResetNickCommand extends PlayerCommandHandler {
 
     private final Elemental plugin = Elemental.getPlugin();
     private final FileConfiguration config = plugin.getConfig();
@@ -28,33 +27,35 @@ public class FeedCommand extends PlayerCommandHandler {
 
     @Override
     public String getName() {
-        return "feed";
+        return "resetnick";
     }
 
     @Override
     public String getUsage() {
-        return "/feed <player>";
+        return "/resetnick <player>";
     }
 
     @Override
     public void executePlayerCommand(final Player p, final String[] args) throws NoPermissionException, InvalidUsageException, PlayerNotFoundException {
-        if (!(p.hasPermission(Objects.requireNonNull(config.getString("feed.permission.self"))) || p.hasPermission(Objects.requireNonNull(config.getString("feed.permission.others"))))) {
+        if (!(p.hasPermission("elemental.resetnick") || p.hasPermission("elemental.resetnick.others"))) {
             throw new NoPermissionException();
         }
         if (args.length == 0) {
-            if (p.hasPermission(Objects.requireNonNull(config.getString("feed.permission.self")))) {
-                p.setFoodLevel(20);
-                msgPlayer(p, color(prefix + config.getString("feed.message.permission.self")));
+            if (p.hasPermission("elemental.resetnick")) {
+                p.setDisplayName(p.getName());
+                removePlayerNick(p.getUniqueId());
+                msgPlayer(p, color(prefix + "&eYour nick has been reseted!"));
             } else {
                 throw new NoPermissionException();
             }
         } else if (args.length == 1) {
-            if (p.hasPermission(Objects.requireNonNull(config.getString("feed.permission.others")))) {
+            if (p.hasPermission("elemental.resetnick.others")) {
                 Player t = Bukkit.getPlayer(args[0]);
                 if (t != null) {
-                    t.setFoodLevel(20);
-                    msgPlayer(t, color(prefix + config.getString("feed.message.permission.self")));
-                    msgPlayer(p, color(prefix + config.getString("feed.message.permission.others")));
+                    msgPlayer(t, color(prefix + "&eThe name of &c" + t.getDisplayName() + " &ehas been reseted!"));
+                    t.setDisplayName(t.getName());
+                    removePlayerNick(t.getUniqueId());
+                    msgPlayer(p, color(prefix + "&eYour nick has been reseted!"));
                 } else {
                     throw new PlayerNotFoundException(args[0]);
                 }
