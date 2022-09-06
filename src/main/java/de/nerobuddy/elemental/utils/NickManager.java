@@ -10,19 +10,22 @@ import java.util.UUID;
  * @created 04.09.2022 - 21:10
  */
 
-public class NickManager {
+public final class NickManager {
 
-    private static final Map<UUID, String> nickNames = new HashMap<>();
-
-    public static void addPlayerNick(UUID uuid, String nickName) {
-        nickNames.put(uuid, nickName);
+    private NickManager() {
     }
 
-    public static void removePlayerNick(UUID uuid) {
-        nickNames.remove(uuid);
+    private static final Map<UUID, String> NICK_NAMES = new HashMap<>();
+
+    public static void addPlayerNick(final UUID uuid, final String nickName) {
+        NICK_NAMES.put(uuid, nickName);
+    }
+
+    public static void removePlayerNick(final UUID uuid) {
+        NICK_NAMES.remove(uuid);
     }
 
     public static Map<UUID, String> getNickNames() {
-        return nickNames;
+        return NICK_NAMES;
     }
 }

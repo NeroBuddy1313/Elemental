@@ -62,7 +62,7 @@ public class NickCommand extends PlayerCommandHandler {
                     msgPlayer(t, color(prefix + "&eYour nick has been reseted!"));
                     msgPlayer(t, color(prefix + "&eThe name of &c" + t.getDisplayName() + " &ehas been reseted!"));
                     return;
-                }else {
+                } else {
                     throw new PlayerNotFoundException(args[0]);
                 }
             }
@@ -73,7 +73,7 @@ public class NickCommand extends PlayerCommandHandler {
                 addPlayerNick(t.getUniqueId(), nickName);
                 msgPlayer(t, color(prefix + "&eYour name was set to &c" + t.getDisplayName() + "&e!"));
                 msgPlayer(p, color(prefix + "&eThe name of &c" + t.getName() + " &ewas set to &c" + p.getDisplayName() + "&e!"));
-            }else {
+            } else {
                 throw new PlayerNotFoundException(args[0]);
             }
         } else {

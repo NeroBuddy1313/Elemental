@@ -75,6 +75,21 @@ public final class Utils {
         config.addDefault("fly.message.self.nofly", "&eYou can't fly anymore!");
         config.addDefault("fly.message.others.fly", "&c%player% &can fly now!");
         config.addDefault("fly.message.others.nofly", "&c%player% &can't fly anymore!");
+        config.addDefault("gamemode", "");
+        config.addDefault("gamemode.permission.self", "elemental.gamemode");
+        config.addDefault("gamemode.permission.others", "elemental.gamemode.others");
+        config.addDefault("gamemode.message.survival", "&eGamemode changed to: &bSurvival");
+        config.addDefault("gamemode.message.creative", "&eGamemode changed to: &bCreative");
+        config.addDefault("gamemode.message.adventure", "&eGamemode changed to: &bAdventure");
+        config.addDefault("gamemode.message.spectator", "&eGamemode changed to: &bSpectator");
+        config.addDefault("vanish", "");
+        config.addDefault("vanish.permission.self", "elemental.vanish");
+        config.addDefault("vanish.permission.others", "elemental.vanish.others");
+        config.addDefault("vanish.permission.bypass", "elemental.vanish.bypass");
+        config.addDefault("vanish.message.self.on", "&eYou are now invisible to other players!");
+        config.addDefault("vanish.message.self.off", "&eYou are now visible to all players!");
+        config.addDefault("vanish.message.others.on", "&c%player% &eis now invisible to all players!");
+        config.addDefault("vanish.message.others.off", "&c%player% &eis now visible to all players!");
 
     }
 

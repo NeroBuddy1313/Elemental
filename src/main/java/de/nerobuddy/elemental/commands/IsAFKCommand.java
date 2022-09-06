@@ -36,26 +36,26 @@ public class IsAFKCommand extends PlayerCommandHandler {
     }
 
     @Override
-    public void executePlayerCommand(Player p, String[] args) throws NoPermissionException, InvalidUsageException, PlayerNotFoundException {
-        if(!p.hasPermission("elemental.isafk")){
+    public void executePlayerCommand(final Player p, final String[] args) throws NoPermissionException, InvalidUsageException, PlayerNotFoundException {
+        if (!p.hasPermission("elemental.isafk")) {
             throw new NoPermissionException();
         }
-        if(args.length == 0){
+        if (args.length == 0) {
             if (isAFK(p.getUniqueId())) {
                 msgPlayer(p, color(prefix + "&eYou are currently AFK!"));
-            }else{
+            } else {
                 msgPlayer(p, color(prefix + "&eYou are currently not AFK!"));
             }
         } else if (args.length == 1) {
             Player t = Bukkit.getPlayerExact(args[0]);
-            if(t != null) {
+            if (t != null) {
                 if (isAFK(t.getUniqueId())) {
                     msgPlayer(p, color(prefix + "&c" + t.getDisplayName() + " &eis currently AFK!"));
-                }else{
+                } else {
                     msgPlayer(p, color(prefix + "&c" + t.getDisplayName() + " &eis currently not AFK!"));
                 }
-            }else {
-                throw  new PlayerNotFoundException(args[0]);
+            } else {
+                throw new PlayerNotFoundException(args[0]);
             }
         } else {
             throw new InvalidUsageException();

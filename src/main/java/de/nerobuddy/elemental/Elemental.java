@@ -56,6 +56,7 @@ public final class Elemental extends JavaPlugin {
         commandPool.addCommand(new ResetNickCommand());
         commandPool.addCommand(new IsAFKCommand());
         commandPool.addCommand(new AFKCommand());
+        commandPool.addCommand(new VanishCommand());
     }
 
     public void registerListeners() {

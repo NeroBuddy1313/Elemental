@@ -39,7 +39,7 @@ public class AFKCommand extends PlayerCommandHandler {
     }
 
     @Override
-    public void executePlayerCommand(Player p, String[] args) throws NoPermissionException, InvalidUsageException, PlayerNotFoundException {
+    public void executePlayerCommand(final Player p, final String[] args) throws NoPermissionException, InvalidUsageException, PlayerNotFoundException {
         if (!(p.hasPermission(Objects.requireNonNull(config.getString("afk.permission.others"))) || p.hasPermission(Objects.requireNonNull(config.getString("afk.permission.self"))))) {
             throw new NoPermissionException();
         }

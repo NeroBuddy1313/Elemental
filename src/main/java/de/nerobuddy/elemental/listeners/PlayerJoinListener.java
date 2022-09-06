@@ -1,6 +1,7 @@
 package de.nerobuddy.elemental.listeners;
 
 import de.nerobuddy.elemental.Elemental;
+import de.nerobuddy.elemental.utils.VanishManager;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,12 +33,15 @@ public class PlayerJoinListener implements Listener {
         UUID uuid = p.getUniqueId();
 
         // set nickname from before session
-        if(getNickNames().containsKey(uuid)){
+        if (getNickNames().containsKey(uuid)) {
             p.setDisplayName(getNickNames().get(uuid));
         }
 
         // AFK player joined
         playerJoined(uuid);
+
+        // Vanish
+        VanishManager.hideAll(e.getPlayer().getUniqueId());
 
         // set join message
         e.setJoinMessage(color(prefix + Objects.requireNonNull(config.getString("joinMessage")).replace("%player%", p.getDisplayName())));

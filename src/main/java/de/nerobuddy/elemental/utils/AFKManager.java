@@ -26,29 +26,29 @@ public class AFKManager {
 
     private static final long MOVEMENT_THRESHOLD = 60000;
 
-    private static final Map<UUID, Long> lastMovement = new HashMap<>();
+    private static final Map<UUID, Long> LAST_MOVEMENT = new HashMap<>();
 
-    public static void playerJoined(UUID uuid) {
-        lastMovement.put(uuid, System.currentTimeMillis());
+    public static void playerJoined(final UUID uuid) {
+        LAST_MOVEMENT.put(uuid, System.currentTimeMillis());
     }
 
-    public static void playerLeft(UUID uuid) {
-        lastMovement.remove(uuid);
+    public static void playerLeft(final UUID uuid) {
+        LAST_MOVEMENT.remove(uuid);
     }
 
-    public static boolean toggleAFKStatus(UUID uuid) {
+    public static boolean toggleAFKStatus(final UUID uuid) {
         if (isAFK(uuid)) {
-            lastMovement.put(uuid, System.currentTimeMillis());
+            LAST_MOVEMENT.put(uuid, System.currentTimeMillis());
             return false;
         } else {
-            lastMovement.put(uuid, -1L);
+            LAST_MOVEMENT.put(uuid, -1L);
             return true;
         }
     }
 
-    public static void playerMoved(UUID uuid) {
+    public static void playerMoved(final UUID uuid) {
         boolean wasAFK = isAFK(uuid);
-        lastMovement.put(uuid, System.currentTimeMillis());
+        LAST_MOVEMENT.put(uuid, System.currentTimeMillis());
         boolean nowAFK = isAFK(uuid);
 
         AFKManager afkManager = new AFKManager();
@@ -67,11 +67,11 @@ public class AFKManager {
 
     }
 
-    public static boolean isAFK(UUID uuid) {
-        if (lastMovement.get(uuid) == -1L) {
+    public static boolean isAFK(final UUID uuid) {
+        if (LAST_MOVEMENT.get(uuid) == -1L) {
             return true;
         } else {
-            long timeElapsed = System.currentTimeMillis() - lastMovement.get(uuid);
+            long timeElapsed = System.currentTimeMillis() - LAST_MOVEMENT.get(uuid);
             return timeElapsed >= MOVEMENT_THRESHOLD;
         }
     }
