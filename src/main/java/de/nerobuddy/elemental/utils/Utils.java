@@ -145,6 +145,13 @@ public final class Utils {
         config.addDefault("resetnick.message.self", "&eYour nick has been reseted!");
         config.addDefault("resetnick.message.others", "&eThe name of &c%player% &ehas been reseted!");
 
+        // sethealth command messages
+        config.addDefault("sethealth", "");
+        config.addDefault("sethealth.permission.self", "elemental.sethealth");
+        config.addDefault("sethealth.permission.others", "elemental.sethealth.others");
+        config.addDefault("sethealth.message.self", "&eYour healtscale has been set to &c%healthScale%&e!");
+        config.addDefault("sethealth.message.others", "&eThe healtscale of &c%player% &ehas been set to &c%healthScale%&e!");
+
     }
 
 }
