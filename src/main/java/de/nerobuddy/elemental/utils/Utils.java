@@ -90,6 +90,13 @@ public final class Utils {
         config.addDefault("vanish.message.self.off", "&eYou are now visible to all players!");
         config.addDefault("vanish.message.others.on", "&c%player% &eis now invisible to all players!");
         config.addDefault("vanish.message.others.off", "&c%player% &eis now visible to all players!");
+        config.addDefault("godmode", "");
+        config.addDefault("godmode.permission.self", "elemental.godmode");
+        config.addDefault("godmode.permission.others", "elemental.godmode.others");
+        config.addDefault("godmode.message.self.on", "&eYou are now invulnerable!");
+        config.addDefault("godmode.message.self.off", "&eYou are no longer invulnerable!");
+        config.addDefault("godmode.message.others.on", "&c%player% &eis now invulnerable!");
+        config.addDefault("godmode.message.others.off", "&c%player% &eis no longer invulnerable!");
 
     }
 
