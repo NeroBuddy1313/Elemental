@@ -129,6 +129,15 @@ public final class Utils {
         config.addDefault("heal.message.self", "&eYou have been healed!");
         config.addDefault("heal.message.others", "&c%player% &ehas been healed!");
 
+        // nick command messages
+        config.addDefault("nick", "");
+        config.addDefault("nick.permission.self", "elemental.nick");
+        config.addDefault("nick.permission.others", "elemental.nick.others");
+        config.addDefault("nick.message.self.reset", "&eYour nick has been reseted!");
+        config.addDefault("nick.message.self.set", "&eYour name was set to &c%player%&e!");
+        config.addDefault("nick.message.others.reset", "&eThe name of &c%player% &ehas been reseted!");
+        config.addDefault("nick.message.others.set", "&eThe name of &c%oplayer% &ewas set to &c%player%&e!");
+
     }
 
 }

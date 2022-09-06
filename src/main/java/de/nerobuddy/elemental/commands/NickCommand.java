@@ -9,6 +9,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import java.util.Objects;
+
 import static de.nerobuddy.elemental.utils.NickManager.addPlayerNick;
 import static de.nerobuddy.elemental.utils.NickManager.removePlayerNick;
 import static de.nerobuddy.elemental.utils.Utils.color;
@@ -38,44 +40,53 @@ public class NickCommand extends PlayerCommandHandler {
 
     @Override
     public void executePlayerCommand(final Player p, final String[] args) throws NoPermissionException, InvalidUsageException, PlayerNotFoundException {
-        if (!(p.hasPermission("elemental.nick"))) {
+        if (!(p.hasPermission(Objects.requireNonNull(config.getString("nick.permission.self"))) || p.hasPermission(Objects.requireNonNull(config.getString("nick.permission.others"))))) {
             throw new NoPermissionException();
         }
         String nickName;
         if (args.length == 1) {
-            if (args[0].equals("reset")) {
-                p.setDisplayName(p.getName());
-                removePlayerNick(p.getUniqueId());
-                msgPlayer(p, color(prefix + "&eYour nick has been reseted!"));
-                return;
+            if (p.hasPermission(Objects.requireNonNull(config.getString("nick.permission.self")))) {
+                if (args[0].equals("reset")) {
+                    p.setDisplayName(p.getName());
+                    removePlayerNick(p.getUniqueId());
+                    msgPlayer(p, color(prefix + config.getString("nick.message.self.reset")));
+                    return;
+                }
+                nickName = color(args[0]);
+                p.setDisplayName(nickName);
+                addPlayerNick(p.getUniqueId(), nickName);
+                msgPlayer(p, color(prefix + Objects.requireNonNull(config.getString("nick.message.self.set")).replace("%player%", p.getDisplayName())));
+            } else {
+                throw new NoPermissionException();
             }
-            nickName = color(args[0]);
-            p.setDisplayName(nickName);
-            addPlayerNick(p.getUniqueId(), nickName);
-            msgPlayer(p, color(prefix + "&eYour name was set to &c" + p.getDisplayName() + "&e!"));
         } else if (args.length == 2) {
-            if (args[1].equals("reset")) {
+            if (p.hasPermission(Objects.requireNonNull(config.getString("nick.permission.self")))) {
+                if (args[1].equals("reset")) {
+                    Player t = Bukkit.getPlayer(args[0]);
+                    if (t != null) {
+                        t.setDisplayName(t.getName());
+                        removePlayerNick(t.getUniqueId());
+                        msgPlayer(t, color(prefix + config.getString("nick.message.self.reset")));
+                        msgPlayer(p, color(prefix + Objects.requireNonNull(config.getString("nick.message.others.reset")).replace("%player%", p.getDisplayName())));
+                    } else {
+                        throw new PlayerNotFoundException(args[0]);
+                    }
+                }
+            } else if (p.hasPermission(Objects.requireNonNull(config.getString("nick.permission.others")))) {
                 Player t = Bukkit.getPlayer(args[0]);
                 if (t != null) {
-                    t.setDisplayName(t.getName());
-                    removePlayerNick(t.getUniqueId());
-                    msgPlayer(t, color(prefix + "&eYour nick has been reseted!"));
-                    msgPlayer(t, color(prefix + "&eThe name of &c" + t.getDisplayName() + " &ehas been reseted!"));
-                    return;
+                    nickName = args[1];
+                    t.setDisplayName(color(nickName));
+                    addPlayerNick(t.getUniqueId(), nickName);
+                    msgPlayer(t, color(prefix + Objects.requireNonNull(config.getString("nick.message.self.set")).replace("%player%", t.getDisplayName())));
+                    msgPlayer(p, color(prefix + Objects.requireNonNull(config.getString("nick.message.others.set")).replace("%player%", t.getDisplayName()).replace("%oplayer%", t.getName())));
                 } else {
                     throw new PlayerNotFoundException(args[0]);
                 }
-            }
-            Player t = Bukkit.getPlayer(args[0]);
-            if (t != null) {
-                nickName = args[1];
-                t.setDisplayName(color(nickName));
-                addPlayerNick(t.getUniqueId(), nickName);
-                msgPlayer(t, color(prefix + "&eYour name was set to &c" + t.getDisplayName() + "&e!"));
-                msgPlayer(p, color(prefix + "&eThe name of &c" + t.getName() + " &ewas set to &c" + p.getDisplayName() + "&e!"));
             } else {
-                throw new PlayerNotFoundException(args[0]);
+                throw new NoPermissionException();
             }
+
         } else {
             throw new InvalidUsageException();
         }
