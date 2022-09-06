@@ -152,6 +152,11 @@ public final class Utils {
         config.addDefault("sethealth.message.self", "&eYour healtscale has been set to &c%healthScale%&e!");
         config.addDefault("sethealth.message.others", "&eThe healtscale of &c%player% &ehas been set to &c%healthScale%&e!");
 
+        // uuid command messages
+        config.addDefault("uuid", "");
+        config.addDefault("uuid.permission", "elemental.uuid");
+        config.addDefault("uuid.message", "&eThe UUID of &c%player% &eis &c%uuid%");
+
     }
 
 }

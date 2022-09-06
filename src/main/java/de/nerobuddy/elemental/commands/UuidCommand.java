@@ -9,7 +9,8 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import static de.nerobuddy.elemental.utils.Utils.color;
+import java.util.Objects;
+
 import static de.nerobuddy.elemental.utils.Utils.msgPlayer;
 
 /**
@@ -36,13 +37,13 @@ public class UuidCommand extends PlayerCommandHandler {
 
     @Override
     public void executePlayerCommand(final Player p, final String[] args) throws NoPermissionException, InvalidUsageException {
-        if (!(p.hasPermission("elemental.uuid"))) {
+        if (!(p.hasPermission(Objects.requireNonNull(config.getString("uuid.permission"))))) {
             throw new NoPermissionException();
         }
         if (args.length != 1) {
             throw new InvalidUsageException();
         }
-        OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-        msgPlayer(p, color(prefix + "&eDie UUID von &c" + target.getName() + " &eist &c" + target.getUniqueId()));
+        OfflinePlayer t = Bukkit.getOfflinePlayer(args[0]);
+        msgPlayer(p, prefix + Objects.requireNonNull(config.getString("uuid.message")).replace("%player%", Objects.requireNonNull(t.getName())).replace("%uuid%", String.valueOf(t.getUniqueId())));
     }
 }
