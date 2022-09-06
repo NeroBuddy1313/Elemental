@@ -138,6 +138,13 @@ public final class Utils {
         config.addDefault("nick.message.others.reset", "&eThe name of &c%player% &ehas been reseted!");
         config.addDefault("nick.message.others.set", "&eThe name of &c%oplayer% &ewas set to &c%player%&e!");
 
+        // resetnick command messages
+        config.addDefault("resetnick", "");
+        config.addDefault("resetnick.permission.self", "elemental.nick");
+        config.addDefault("resetnick.permission.others", "elemental.nick.others");
+        config.addDefault("resetnick.message.self", "&eYour nick has been reseted!");
+        config.addDefault("resetnick.message.others", "&eThe name of &c%player% &ehas been reseted!");
+
     }
 
 }
