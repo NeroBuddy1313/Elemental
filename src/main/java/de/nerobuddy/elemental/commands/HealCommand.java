@@ -9,6 +9,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import java.util.Objects;
+
 import static de.nerobuddy.elemental.utils.Utils.color;
 import static de.nerobuddy.elemental.utils.Utils.msgPlayer;
 
@@ -36,25 +38,25 @@ public class HealCommand extends PlayerCommandHandler {
 
     @Override
     public void executePlayerCommand(final Player p, final String[] args) throws NoPermissionException, InvalidUsageException, PlayerNotFoundException {
-        if (!(p.hasPermission("elemental.heal") || p.hasPermission("elemental.heal.others"))) {
+        if (!(p.hasPermission(Objects.requireNonNull(config.getString("heal.permission.self"))) || p.hasPermission(Objects.requireNonNull(config.getString("heal.permission.others"))))) {
             throw new NoPermissionException();
         }
         if (args.length == 0) {
-            if (p.hasPermission("elemental.heal")) {
+            if (p.hasPermission(Objects.requireNonNull(config.getString("heal.permission.self")))) {
                 p.setFoodLevel(20);
                 p.setHealth(p.getMaxHealth());
-                msgPlayer(p, color(prefix + "&eYou have been healed!"));
+                msgPlayer(p, color(prefix + config.getString("heal.message.self")));
             } else {
                 throw new NoPermissionException();
             }
         } else if (args.length == 1) {
-            if (p.hasPermission("elemental.heal.others")) {
+            if (p.hasPermission(Objects.requireNonNull(config.getString("heal.permission.others")))) {
                 Player t = Bukkit.getPlayer(args[0]);
                 if (t != null) {
                     t.setFoodLevel(20);
                     t.setHealth(t.getMaxHealth());
-                    msgPlayer(t, color(prefix + "&eYou have been healed!"));
-                    msgPlayer(p, color(prefix + "&c" + t.getDisplayName() + " &ehas been healed!"));
+                    msgPlayer(t, color(prefix + config.getString("heal.message.self")));
+                    msgPlayer(p, color(prefix + Objects.requireNonNull(config.getString("heal.message.others")).replace("%player%", t.getDisplayName())));
                 } else {
                     throw new PlayerNotFoundException(args[0]);
                 }

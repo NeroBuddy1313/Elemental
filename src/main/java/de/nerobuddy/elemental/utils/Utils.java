@@ -53,9 +53,15 @@ public final class Utils {
     public static void setConfigDefaults() {
         Elemental plugin = Elemental.getPlugin();
         FileConfiguration config = plugin.getConfig();
+
+        // prefix
         config.addDefault("prefix", "&8[&eElemental&8] ");
+
+        // joinMessage & quitMessage
         config.addDefault("joinMessage", "&c%player% &ehas joined the server");
         config.addDefault("quitMessage", "&c%player% &ehas left the server");
+
+        // afk command messages
         config.addDefault("afk", "");
         config.addDefault("afk.permission.self", "elemental.afk");
         config.addDefault("afk.permission.others", "elemental.afk.others");
@@ -63,11 +69,15 @@ public final class Utils {
         config.addDefault("afk.message.self.noafk", "&eYou are no longer AFK!");
         config.addDefault("afk.message.others.afk", "&c%player% &eis now AFK!");
         config.addDefault("afk.message.others.noafk", "&c%player% &eis no longer AFK!");
+
+        // feed command messages
         config.addDefault("feed", "");
         config.addDefault("feed.permission.self", "elemental.feed");
         config.addDefault("feed.permission.others", "elemental.feed.others");
         config.addDefault("feed.message.self", "&eYou have been feed!");
         config.addDefault("feed.message.others", "&c%player% &has been feed!");
+
+        // fly command messages
         config.addDefault("fly", "");
         config.addDefault("fly.permission.self", "elemental.fly");
         config.addDefault("fly.permission.others", "elemental.fly.others");
@@ -75,6 +85,8 @@ public final class Utils {
         config.addDefault("fly.message.self.nofly", "&eYou can't fly anymore!");
         config.addDefault("fly.message.others.fly", "&c%player% &can fly now!");
         config.addDefault("fly.message.others.nofly", "&c%player% &can't fly anymore!");
+
+        // gamemode command messages
         config.addDefault("gamemode", "");
         config.addDefault("gamemode.permission.self", "elemental.gamemode");
         config.addDefault("gamemode.permission.others", "elemental.gamemode.others");
@@ -82,6 +94,8 @@ public final class Utils {
         config.addDefault("gamemode.message.creative", "&eGamemode changed to: &bCreative");
         config.addDefault("gamemode.message.adventure", "&eGamemode changed to: &bAdventure");
         config.addDefault("gamemode.message.spectator", "&eGamemode changed to: &bSpectator");
+
+        // vanish command messages
         config.addDefault("vanish", "");
         config.addDefault("vanish.permission.self", "elemental.vanish");
         config.addDefault("vanish.permission.others", "elemental.vanish.others");
@@ -90,6 +104,8 @@ public final class Utils {
         config.addDefault("vanish.message.self.off", "&eYou are now visible to all players!");
         config.addDefault("vanish.message.others.on", "&c%player% &eis now invisible to all players!");
         config.addDefault("vanish.message.others.off", "&c%player% &eis now visible to all players!");
+
+        // godmode command messages
         config.addDefault("godmode", "");
         config.addDefault("godmode.permission.self", "elemental.godmode");
         config.addDefault("godmode.permission.others", "elemental.godmode.others");
@@ -97,6 +113,13 @@ public final class Utils {
         config.addDefault("godmode.message.self.off", "&eYou are no longer invulnerable!");
         config.addDefault("godmode.message.others.on", "&c%player% &eis now invulnerable!");
         config.addDefault("godmode.message.others.off", "&c%player% &eis no longer invulnerable!");
+
+        // heal command messages
+        config.addDefault("heal", "");
+        config.addDefault("heal.permission.self", "elemental.heal");
+        config.addDefault("heal.permission.others", "elemental.heal.others");
+        config.addDefault("heal.message.self", "&eYou have been healed!");
+        config.addDefault("heal.message.others", "&c%player% &ehas been healed!");
 
     }
 
