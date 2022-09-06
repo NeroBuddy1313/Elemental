@@ -70,6 +70,14 @@ public final class Utils {
         config.addDefault("afk.message.others.afk", "&c%player% &eis now AFK!");
         config.addDefault("afk.message.others.noafk", "&c%player% &eis no longer AFK!");
 
+        // isafk command messages
+        config.addDefault("isafk", "");
+        config.addDefault("isafk.permission", "elemental.isafk");
+        config.addDefault("isafk.message.self.afk", "&eYou are currently AFK!");
+        config.addDefault("isafk.message.self.noafk", "&eYou are currently not AFK!");
+        config.addDefault("isafk.message.others.afk", "&c%player% &eis currently AFK!");
+        config.addDefault("isafk.message.others.noafk", "&c%player% &eis currently not AFK!");
+
         // feed command messages
         config.addDefault("feed", "");
         config.addDefault("feed.permission.self", "elemental.feed");

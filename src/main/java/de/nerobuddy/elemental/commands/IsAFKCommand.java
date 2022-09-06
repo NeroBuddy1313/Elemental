@@ -9,6 +9,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import java.util.Objects;
+
 import static de.nerobuddy.elemental.utils.AFKManager.isAFK;
 import static de.nerobuddy.elemental.utils.Utils.color;
 import static de.nerobuddy.elemental.utils.Utils.msgPlayer;
@@ -37,22 +39,22 @@ public class IsAFKCommand extends PlayerCommandHandler {
 
     @Override
     public void executePlayerCommand(final Player p, final String[] args) throws NoPermissionException, InvalidUsageException, PlayerNotFoundException {
-        if (!p.hasPermission("elemental.isafk")) {
+        if (!p.hasPermission(Objects.requireNonNull(config.getString("isafk.permission")))) {
             throw new NoPermissionException();
         }
         if (args.length == 0) {
             if (isAFK(p.getUniqueId())) {
-                msgPlayer(p, color(prefix + "&eYou are currently AFK!"));
+                msgPlayer(p, color(prefix + config.getString("isafk.message.self.afk")));
             } else {
-                msgPlayer(p, color(prefix + "&eYou are currently not AFK!"));
+                msgPlayer(p, color(prefix + config.getString("isafk.message.self.noafk")));
             }
         } else if (args.length == 1) {
             Player t = Bukkit.getPlayerExact(args[0]);
             if (t != null) {
                 if (isAFK(t.getUniqueId())) {
-                    msgPlayer(p, color(prefix + "&c" + t.getDisplayName() + " &eis currently AFK!"));
+                    msgPlayer(p, color(prefix + Objects.requireNonNull(config.getString("isafk.message.others.afk")).replace("%player%", t.getDisplayName())));
                 } else {
-                    msgPlayer(p, color(prefix + "&c" + t.getDisplayName() + " &eis currently not AFK!"));
+                    msgPlayer(p, color(prefix + Objects.requireNonNull(config.getString("isafk.message.others.noafk")).replace("%player%", t.getDisplayName())));
                 }
             } else {
                 throw new PlayerNotFoundException(args[0]);
